@@ -30,7 +30,7 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
       break;
   }
 
-  const getProducts = async () => {
+  const getAllProducts = async () => {
     let data = [];
     try {
       if (productsType === 'clothing') {
@@ -51,30 +51,37 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
     }
   }
 
+  const getFourProducts = async () => {
+    let data = [];
+    try {
+      if (props.category === 'clothing') {
+        const response1 = await fetch(`https://fakestoreapi.com/products/category/men's clothing?limit=4`);
+        const data = await response1.json()
+        setProducts(data);
+        return;
+      }
+      const response = await fetch(`https://fakestoreapi.com/products/category/${props.category}?limit=4`);
+      data = await response.json();
+      setProducts(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  
+
+  
+
   useEffect(() => {
     setProducts([]);
-    getProducts();
+    if (productsType) {
+      getAllProducts();
+    }else{
+      getFourProducts();
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsType])
-
-
-
-  //mock 데이터 중 props로 받아온 카테고리와 일치하는 것들만 저장
-  const items = db.filter((item) => {
-    return item.category === props.category;
-  });
-
-  //4개만 보여줄지, 전체 다 보여줄지 판별하는 flag
-  let count = 4;
-  if (props.sort === "complex") {
-    count = items.length;
-  }
-
-  //개수가 정해진 아이템 리스트
-  const showedItem = [];
-  for (let i = 0; i < count; i++) {
-    showedItem.push(items[i]);
-  }
 
   return (
     <>

@@ -1,5 +1,10 @@
-import React from "react";
 import { styled } from "styled-components";
+
+const NotFoundPage = () => {
+  return <Not>NotFound</Not>;
+}
+
+export default NotFoundPage
 
 const Not = styled.div`
   position: absolute;
@@ -15,7 +20,3 @@ const Not = styled.div`
   font-size: 26px;
   font-weight: 700;
 `;
-
-export default function NotFound() {
-  return <Not>NotFound</Not>;
-}

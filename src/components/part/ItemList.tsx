@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../../mock/db";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
 
@@ -13,8 +12,10 @@ interface products {
 //아이템 리스트 나열하는 컴포넌트
 const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
   const [products, setProducts] = useState<products[]>([])
-  const productsType = useParams().type
-
+  let productsType = useParams().type
+  if (productsType === undefined) {
+    productsType = props.category
+  }
 
   // 상품별 카테고리 이름 설정
   let title = "";
@@ -54,13 +55,13 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
   const getFourProducts = async () => {
     let data = [];
     try {
-      if (props.category === 'clothing') {
+      if (productsType === 'clothing') {
         const response1 = await fetch(`https://fakestoreapi.com/products/category/men's clothing?limit=4`);
         const data = await response1.json()
         setProducts(data);
         return;
       }
-      const response = await fetch(`https://fakestoreapi.com/products/category/${props.category}?limit=4`);
+      const response = await fetch(`https://fakestoreapi.com/products/category/${productsType}?limit=4`);
       data = await response.json();
       setProducts(data);
       console.log(data);
@@ -68,7 +69,7 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
       console.log(error);
     }
   }
-
+  
   useEffect(() => {
     setProducts([]);
     if (productsType) {

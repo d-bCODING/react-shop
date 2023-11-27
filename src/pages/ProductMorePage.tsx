@@ -6,7 +6,7 @@ const ProductsMorePage = () => {
     return (
         <>
             <Header />
-            <Product id={1}></Product>
+            <Product></Product>
             <Footer />
         </>
     );

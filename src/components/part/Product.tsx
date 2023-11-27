@@ -1,33 +1,39 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
-import { db } from "../../mock/db";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
+interface product{
+  title:string
+  image:string
+  description:string
+  price:number
+  rating :{
+    rate:number
+    count:number
+  }
+}
 
+const Product= () => {
+  const { type: prductType, id: productId } = useParams()
+  const [product, setProduct] = useState<product>()
 
-const Product: React.FC<{ id: number }> = (props) => {
-  const item = db.filter((el) => {
-    return el.id === props.id;
-  });
-
-  let category = "";
-  switch (item[0].category) {
-    case "fashion":
-      category = "패션";
-      break;
-    case "accessory":
-      category = "악세서리";
-      break;
-    case "digital":
-      category = "디지털";
-      break;
-    default:
-      break;
+  const getProductInfo = async () => {
+    let data = [];
+    try {
+      const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+      data = await response.json();
+      setProduct(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  const src = item[0].src;
+  useEffect(() => {
+    getProductInfo();
+  }, [])
 
-  const setProduct = () => {
+  const setProduct2 = () => {
     alert(
       `
     장바구니에 품목이 담겼습니다
@@ -41,35 +47,39 @@ const Product: React.FC<{ id: number }> = (props) => {
   };
 
   return (
-    <Section src={src}>
-      <div className="inner">
-        <p className="category">
-          {category} &gt; {item[0].title}
-        </p>
-        <div className="product">
-          <div className="img-box"></div>
-          <div className="info">
-            <p className="title">{item[0].title}</p>
-            <p className="description">{item[0].description}</p>
-            <div className="score">
-              <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-              </ul>
-              <span>4.0 / 119명 참여</span>
-            </div>
-            <p className="price">${item[0].price}</p>
-            <div className="link">
-              <button onClick={setProduct}>장바구니에 담기</button>
-              <Link to="/cart">장바구니로 이동</Link>
+    <>
+      {product && (
+        <Section src={product.image}>
+          <div className="inner">
+            <p className="category">
+              {prductType} &gt; {product.title}
+            </p>
+            <div className="product">
+              <div className="img-box"></div>
+              <div className="info">
+                <p className="title">{product.title}</p>
+                <p className="description">{product.description}</p>
+                <div className="score">
+                  <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                  </ul>
+                  <span>{product.rating.rate} / {product.rating.count}명 참여</span>
+                </div>
+                <p className="price">${product.price}</p>
+                <div className="link">
+                  <button onClick={setProduct2}>장바구니에 담기</button>
+                  <Link to="/cart">장바구니로 이동</Link>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </Section>
+        </Section>
+      )}
+    </>
   );
 };
 
@@ -95,7 +105,7 @@ const Section = styled.section<{ src: string }>`
         width: 500px;
         height: 100%;
         background: ${(props) =>
-          `url(${props.src}) no-repeat center center / 210px 288px`};
+    `url(${props.src}) no-repeat center center / 210px 288px`};
       }
       .info {
         display: flex;

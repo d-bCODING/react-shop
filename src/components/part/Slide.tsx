@@ -1,59 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
-const SlideBanner = styled.div`
-  :root {
-    --scrollbar-with: ;
-  }
-  position: relative;
-  margin-top: 64px;
-  height: 700px;
-  width: calc(100vw - (100vw - 100%));
-  overflow: hidden;
-  .btn {
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 28px;
-    height: 100%;
-    cursor: pointer;
-    color: white;
-  }
-  .left {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .right {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
 
-  ul {
-    z-index: 1;
-    display: flex;
-    gap: 10px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 10px;
-    li {
-      width: 8px;
-      height: 8px;
-      background-color: white;
-      border-radius: 50%;
-      opacity: 0.5;
-      transition: all 0.5s;
-      cursor: pointer;
-      &.selected {
-        opacity: 1;
-      }
-    }
-  }
-`;
 
 const Viewed = styled.div<{ count: number; vw: number }>`
   display: flex;
@@ -87,10 +36,10 @@ const Viewed = styled.div<{ count: number; vw: number }>`
           width: 110px;
           height: 48px;
           padding: 0 16px;
-          background-color: gray;
-
+          font-weight: bold;
+          background-color: teal;
           color: white;
-          font-size: 14px;
+          font-size: 16px;
           line-height: 48px;
           text-decoration: none;
           border-radius: 10px;
@@ -140,9 +89,9 @@ export default function Slide() {
     }
   };
 
-  const autoSlide = () => {
-    setInterval(upCount, 5000);
-  };
+  // const autoSlide = () => {
+  //   setInterval(upCount, 5000);
+  // };
 
   //왜 안될까 ㅠㅠ
   // const stopSlide = () =>{
@@ -203,3 +152,56 @@ export default function Slide() {
     </SlideBanner>
   );
 }
+
+const SlideBanner = styled.div`
+  :root {
+    --scrollbar-with: ;
+  }
+  position: relative;
+  margin-top: 64px;
+  height: 700px;
+  width: calc(100vw - (100vw - 100%));
+  overflow: hidden;
+  .btn {
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 100%;
+    cursor: pointer;
+    color: white;
+  }
+  .left {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .right {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  ul {
+    z-index: 1;
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
+    li {
+      width: 8px;
+      height: 8px;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0.5;
+      transition: all 0.5s;
+      cursor: pointer;
+      &.selected {
+        opacity: 1;
+      }
+    }
+  }
+`;

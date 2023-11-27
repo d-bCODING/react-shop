@@ -1,51 +1,11 @@
-import React from "react";
 import { styled } from "styled-components";
-
-const FooterPart = styled.footer`
-  position: relative;
-  width: 100%;
-  height: 288px;
-  padding: 40px;
-  box-sizing: border-box;
-  margin-top: 100px;
-  background-color: #f2f2f2;
-  display: flex;
-  justify-content: center;
-  ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    gap: 30px;
-    width: 100%;
-    li {
-      &:first-child {
-        a {
-          color: black;
-          text-decoration: none;
-          font-size: 14px;
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-      ul {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        flex-direction: row;
-      }
-    }
-  }
-`;
 
 export default function Footer() {
   return (
     <FooterPart>
       <ul>
         <li>
-          <a href="">zerobase_FE_14_DB</a>
+          <a href="">zerobase_FE_14_KDB</a>
         </li>
         <li>
           <ul>
@@ -322,3 +282,42 @@ export default function Footer() {
     </FooterPart>
   );
 }
+
+const FooterPart = styled.footer`
+  position: relative;
+  width: 100%;
+  height: 288px;
+  padding: 40px;
+  box-sizing: border-box;
+  margin-top: 100px;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+    width: 100%;
+    li {
+      &:first-child {
+        a {
+          color: black;
+          text-decoration: none;
+          font-size: 14px;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      ul {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-direction: row;
+      }
+    }
+  }
+`;

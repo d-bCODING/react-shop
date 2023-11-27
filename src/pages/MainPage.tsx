@@ -1,7 +1,7 @@
-import ItemList from "../components/part/ItemList";
-import Header from "../components/part/Header";
-import Footer from "../components/part/Footer";
-import Slide from "../components/part/Slide";
+import ItemList from "../components/ItemList";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Slide from "../components/Slide";
 
 const MainPage = () => {
   return (

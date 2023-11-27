@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import Header from '../components/part/Header';
-import ItemList from '../components/part/ItemList';
-import Footer from '../components/part/Footer';
+import Header from '../components/Header';
+import ItemList from '../components/ItemList';
+import Footer from '../components/Footer';
 
 const SortedProductPage = () => {
     const productsType = useParams().type || "";

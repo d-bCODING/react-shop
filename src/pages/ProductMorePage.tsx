@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Link, useParams } from "react-router-dom";
-import Header from '../components/part/Header';
-import Footer from '../components/part/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 interface product {
     title: string
@@ -25,11 +25,9 @@ const ProductsMorePage = () => {
             const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
             data = await response.json();
             setProduct(data);
-            console.log(data);
         } catch (error) {
             console.log(error);
         }
-
     }
 
     const setProduct2 = () => {
@@ -50,7 +48,6 @@ const ProductsMorePage = () => {
             {product && (
                 <Section src={product.image}>
                     <div className="inner">
-                        <span>엥??</span>
                         <p className="category">
                             {prductType} &gt; {product.title}
                         </p>

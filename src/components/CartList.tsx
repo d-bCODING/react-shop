@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-let itemCount = localStorage.length;
+const itemCount = localStorage.length;
 
 const Section = styled.section`
   margin-top: 80px;
@@ -77,7 +77,7 @@ const Section = styled.section`
 function CartList() {
   const [state, setState] = useState(0);
 
-  let cartItem = JSON.parse(localStorage.getItem("cart") || "[]");
+  const cartItem = JSON.parse(localStorage.getItem("cart") || "[]");
   let sum = 0;
   for (let i = 0; i < cartItem.length; i++) {
     sum += cartItem[i][0].price;

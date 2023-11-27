@@ -69,10 +69,6 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
     }
   }
 
-  
-
-  
-
   useEffect(() => {
     setProducts([]);
     if (productsType) {
@@ -96,7 +92,7 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
             <ul>
               {products.map((el) => (
                 <li key={el.id}>
-                  <Link to={`/product/${el.id}`}>
+                  <Link to={`/${productsType}/${el.id}`}>
                     <div className="img-container">
                       <img src={el.image} alt="상품 이미지" />
                     </div>

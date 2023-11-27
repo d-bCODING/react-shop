@@ -2,7 +2,7 @@ export const db = [
   {
     id: 1,
     src: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-    category: "fashion",
+    category: "clothing",
     title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
     description:
       "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
@@ -11,7 +11,7 @@ export const db = [
   {
     id: 2,
     src: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
-    category: "fashion",
+    category: "clothing",
     title: "Mens Casual Premium Slim Fit T-Shirts",
     description:
       "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
@@ -20,7 +20,7 @@ export const db = [
   {
     id: 3,
     src: "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
-    category: "fashion",
+    category: "clothing",
     title: "Mens Cotton Jacket",
     description:
       "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
@@ -29,7 +29,7 @@ export const db = [
   {
     id: 4,
     src: "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
-    category: "fashion",
+    category: "clothing",
     title: "Mens Casual Slim Fit",
     description:
       "The color could be slightly different between on the screen and in practice. / Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description.",
@@ -38,7 +38,7 @@ export const db = [
   {
     id: 5,
     src: "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg",
-    category: "fashion",
+    category: "clothing",
     title: "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats",
     description:
       "Note:The Jackets is US standard size, Please choose size as your usual wear Material: 100% Polyester; Detachable Liner Fabric: Warm Fleece. Detachable Functional Liner: Skin Friendly, Lightweigt and Warm.Stand Collar Liner jacket, keep you warm in cold weather.",
@@ -47,7 +47,7 @@ export const db = [
   {
     id: 6,
     src: "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg",
-    category: "fashion",
+    category: "clothing",
     title:
       "Lock and Love Women's Removable Hooded Faux Leather Moto Biker Jacket",
     description:
@@ -57,7 +57,7 @@ export const db = [
   {
     id: 7,
     src: "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg",
-    category: "fashion",
+    category: "clothing",
     title: "Rain Jacket Women Windbreaker Striped Climbing Raincoats",
     description:
       "Lightweight perfet for trip or casual wear---Long sleeve with hooded, adjustable drawstring waist design. Button and zipper front closure raincoat, fully stripes Lined and The Raincoat has 2 side pockets are a good size to hold all kinds of things, it covers the hips, and the hood is generous but doesn't overdo it.Attached Cotton Lined Hood with Adjustable Drawstrings give it a real styled look.",
@@ -66,7 +66,7 @@ export const db = [
   {
     id: 8,
     src: "https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_.jpg",
-    category: "fashion",
+    category: "clothing",
     title: "MBJ Women's Solid Short Sleeve Boat Neck V",
     description:
       "95% RAYON 5% SPANDEX, Made in USA or Imported, Do Not Bleach, Lightweight fabric with great stretch for comfort, Ribbed on sleeves and neckline / Double stitching on bottom hem",
@@ -75,7 +75,7 @@ export const db = [
   {
     id: 9,
     src: "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
-    category: "fashion",
+    category: "clothing",
     title: "Opna Women's Short Sleeve Moisture",
     description:
       "100% Polyester, Machine wash, 100% cationic polyester interlock, Machine Wash & Pre Shrunk for a Great Fit, Lightweight, roomy and highly breathable with moisture wicking fabric which helps to keep moisture away, Soft Lightweight Fabric with comfortable V-neck collar and a slimmer fit, delivers a sleek, more feminine silhouette and Added Comfort",
@@ -84,7 +84,7 @@ export const db = [
   {
     id: 10,
     src: "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",
-    category: "fashion",
+    category: "clothing",
     title: "DANVOUY Womens T Shirt Casual Cotton Short",
     description:
       "95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.",

@@ -1,4 +1,3 @@
-import React from "react";
 import ItemList from "./part/ItemList";
 import Header from "./part/Header";
 import Footer from "./part/Footer";
@@ -9,9 +8,9 @@ export default function Main() {
     <>
       <Header></Header>
       <Slide></Slide>
-      <ItemList sort={""} category="fashion"></ItemList>
-      <ItemList sort={""} category="accessory"></ItemList>
-      <ItemList sort={""} category="digital"></ItemList>
+      <ItemList sort={""} category="clothing"></ItemList>
+      <ItemList sort={""} category="jewelery"></ItemList>
+      <ItemList sort={""} category="electronics"></ItemList>
       <Footer></Footer>
     </>
   );

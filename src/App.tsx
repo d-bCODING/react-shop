@@ -1,9 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./components/Main";
-import Fashion from "./components/Fashion";
-import Accessory from "./components/Accessory";
-import Digital from "./components/Digital";
+import ClothingPage from "./components/ClothingPage";
 import Cart from "./components/Cart";
+import ProductsMorePage from "./pages/ProductsMorePage";
 import NotFound from "./components/NotFound";
 import Product1 from "./components/product/Product1";
 import Product2 from "./components/product/Product2";
@@ -31,9 +30,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path={"/"} element={<Main />}></Route>
-        <Route path={"/fashion"} element={<Fashion />}></Route>
-        <Route path={"/accessory"} element={<Accessory />}></Route>
-        <Route path={"/digital"} element={<Digital />}></Route>
+        <Route path={"/:type"} element={<ProductsMorePage />}/>
+        <Route path={"/clothing/:id"} element={<ClothingPage />}></Route>
         <Route path={"/cart"} element={<Cart />}></Route>
         <Route path={"/product/1"} element={<Product1 />}></Route>
         <Route path={"/product/2"} element={<Product2 />}></Route>

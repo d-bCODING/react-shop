@@ -3,11 +3,12 @@ import Header from "./part/Header";
 import Footer from "./part/Footer";
 import ItemList from "./part/ItemList";
 
-export default function Fashion() {
+export default function ClothingPage() {
+
   return (
     <>
       <Header></Header>
-      <ItemList sort="complex" category="fashion"></ItemList>
+      <ItemList sort="complex" category="clothing"/>
       <Footer></Footer>
     </>
   );

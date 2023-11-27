@@ -45,7 +45,7 @@ export default function Footer() {
     <FooterPart>
       <ul>
         <li>
-          <a href="">제로베이스</a>
+          <a href="">zerobase_FE_14_DB</a>
         </li>
         <li>
           <ul>

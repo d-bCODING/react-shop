@@ -1,25 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { db } from "../../mock/db";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-
+interface products {
+  id:number
+  image:string
+  title:string
+  price:number
+}
 
 //아이템 리스트 나열하는 컴포넌트
 const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
+  const [products, setProducts] = useState<products[]>([])
+  const productsType = useParams().type
+
+
   // 상품별 카테고리 이름 설정
   let title = "";
   switch (props.category) {
-    case "fashion":
+    case "clothing":
       title = "패션";
       break;
-    case "accessory":
+    case "jewelery":
       title = "악세서리";
       break;
-    case "digital":
+    case "electronics":
       title = "디지털";
       break;
   }
+
+  const getProducts = async () => {
+    let data = [];
+    try {
+      if (productsType === 'clothing') {
+        const response1 = await fetch(`https://fakestoreapi.com/products/category/men's clothing`);
+        const response2 = await fetch(`https://fakestoreapi.com/products/category/women's clothing`);
+        const data1 = await response1.json()
+        const data2 = await response2.json()
+        data = data1.concat(data2);
+        setProducts(data);
+        return;
+      }
+      const response = await fetch(`https://fakestoreapi.com/products/category/${productsType}`);
+      data = await response.json();
+      setProducts(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    setProducts([]);
+    getProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productsType])
+
+
 
   //mock 데이터 중 props로 받아온 카테고리와 일치하는 것들만 저장
   const items = db.filter((item) => {
@@ -46,23 +84,27 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
             <p className="category">홈 &gt; {title}</p>
           )}
           <h3>{title}</h3>
-          <ul>
-            {showedItem.map((el) => (
-              <li key={el.id}>
-                <Link to={`/product/${el.id}`}>
-                  <div className="img-container">
-                    <img src={el.src} alt="상품 이미지" />
-                  </div>
-                  <div className="description">
-                    <div>
-                      <p>{el.title}</p>
-                      <p>{`$${el.price}`}</p>
+          {products.length === 0 && <p className="loading">Loading...</p> }
+          {products && (
+            <ul>
+              {products.map((el) => (
+                <li key={el.id}>
+                  <Link to={`/product/${el.id}`}>
+                    <div className="img-container">
+                      <img src={el.image} alt="상품 이미지" />
                     </div>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
+                    <div className="description">
+                      <div>
+                        <p>{el.title}</p>
+                        <p>{`$${el.price}`}</p>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+
         </div>
       </Section>
     </>
@@ -90,8 +132,12 @@ const Section = styled.section`
       font-size: 36px;
       font-weight: 700;
     }
+    .loading{
+      margin-top: 40px;
+      text-align: center;
+    }
     ul {
-      margin-top: 20px;
+      margin-top: 40px;
       gap: 18.6px;
       display: flex;
       flex-wrap: wrap;

@@ -30,11 +30,7 @@ const ProductsMorePage = () => {
         }
     }
 
-    const setProduct2 = () => {
-        alert(`장바구니에 품목이 담겼습니다`);
-        const dataArray = JSON.parse(localStorage.getItem("cart") || "[]");
-        dataArray.push(item);
-        localStorage.setItem("cart", JSON.stringify(dataArray));
+    const addCartList = () => {
     };
 
     useEffect(() => {
@@ -46,13 +42,13 @@ const ProductsMorePage = () => {
         <>
             <Header />
             {product && (
-                <Section src={product.image}>
+                <Section>
                     <div className="inner">
                         <p className="category">
                             {prductType} &gt; {product.title}
                         </p>
                         <div className="product">
-                            <div className="img-box"></div>
+                            <img src={product.image} alt="상품 이미지" className="img-box"/>
                             <div className="info">
                                 <p className="title">{product.title}</p>
                                 <p className="description">{product.description}</p>
@@ -69,7 +65,7 @@ const ProductsMorePage = () => {
                                 </div>
                                 <p className="price">${product.price}</p>
                                 <div className="link">
-                                    <button onClick={setProduct2}>장바구니에 담기</button>
+                                    <button onClick={addCartList}>장바구니에 담기</button>
                                     <Link to="/cart">장바구니로 이동</Link>
                                 </div>
                             </div>
@@ -84,7 +80,7 @@ const ProductsMorePage = () => {
 
 export default ProductsMorePage;
 
-const Section = styled.section<{ src: string }>`
+const Section = styled.section`
   margin-top: 80px;
   .inner {
     width: 1328px;
@@ -101,10 +97,9 @@ const Section = styled.section<{ src: string }>`
       width: 100%;
       height: 320px;
       .img-box {
-        width: 500px;
+        max-width: 360px;
         height: 100%;
-        background: ${(props) =>
-        `url(${props.src}) no-repeat center center / 210px 288px`};
+        background-size: cover;
       }
       .info {
         display: flex;

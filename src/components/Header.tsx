@@ -1,10 +1,16 @@
 import { useEffect } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 
 export default function Header() {
+
+  const cartList = useSelector(state => state)
+  console.log(cartList);
+  
+
   const cartItem = JSON.parse(localStorage.getItem("cart") || "[]");
   useEffect(() => {}, [cartItem]);
   return (

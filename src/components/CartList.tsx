@@ -1,8 +1,74 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-const itemCount = localStorage.length;
+interface product {
+  productPrice: number
+  productTitle: string
+}
+
+interface cartListObj {
+  cartList: []
+}
+
+function CartList() {
+  const dispatch = useDispatch();
+  const cartList = useSelector((state:cartListObj) => state.cartList)
+  console.log(cartList);
+
+  const totalPrice = cartList.reduce((accumulator: number, obj: product) => accumulator + obj.productPrice, 0);
+
+  const removeItem = (title: string) => {
+    dispatch({
+      type: 'minus',
+      productTitle: title,
+    })
+  };
+
+  const removeAll = () => {
+    dispatch({
+      type: 'removeAll',
+    })
+  };
+  return (
+    <>
+      <Section>
+        <div className="inner">
+          <p className="category">홈 &gt; 장바구니</p>
+          {cartList.length === 0 && (
+            <div>
+              <h2>장바구니에 물품이 없습니다.</h2>
+              <Link to="/">담으러 가기</Link>
+            </div>
+          )}
+          {cartList.length !== 0 && (
+            <>
+              <ul className="list">
+                {cartList.map((el: product) => (
+                  <>
+                    <li key={el.productTitle}>
+                      <span>{el.productTitle}</span>
+                      <div>
+                        <span>${el.productPrice}</span>
+                        <button onClick={() => removeItem(el.productTitle)}>삭제</button>
+                      </div>
+                    </li>
+                  </>
+                ))}
+              </ul>
+              <div className="sum">
+                <p>총 합계액 : ${totalPrice}</p>
+                <button onClick={removeAll}>결제하기</button>
+              </div>
+            </>
+          )}
+        </div>
+      </Section>
+    </>
+  );
+}
+
+export default CartList;
 
 const Section = styled.section`
   margin-top: 80px;
@@ -73,65 +139,3 @@ const Section = styled.section`
     }
   }
 `;
-
-function CartList() {
-  const [state, setState] = useState(0);
-
-  const cartItem = JSON.parse(localStorage.getItem("cart") || "[]");
-  let sum = 0;
-  for (let i = 0; i < cartItem.length; i++) {
-    sum += cartItem[i][0].price;
-  }
-
-  const removeItem = () => {
-    setState(state + 1);
-  };
-
-  const removeAll = () => {
-    alert(`
-      결제 완료 되었습니다!
-      
-      ※ 삭제 버튼은 구현하지 못했습니다.
-    `);
-    localStorage.removeItem("cart");
-    setState(state + 1);
-  };
-  return (
-    <>
-      <Section>
-        <div className="inner">
-          <p className="category">홈 &gt; 장바구니</p>
-          {itemCount === 0 && (
-            <div>
-              <h2>장바구니에 물품이 없습니다.</h2>
-              <Link to="/">담으러 가기</Link>
-            </div>
-          )}
-          {itemCount !== 0 && (
-            <>
-              <ul className="list">
-                {cartItem.map((el: any) => (
-                  <>
-                    <li key={el[0].id}>
-                      <span>{el[0].title}</span>
-                      <div>
-                        <span>${el[0].price}</span>
-                        <button onClick={removeItem}>삭제</button>
-                      </div>
-                    </li>
-                  </>
-                ))}
-              </ul>
-              <div className="sum">
-                <p>총 합계액 : ${sum}</p>
-                <button onClick={removeAll}>결제하기</button>
-              </div>
-            </>
-          )}
-        </div>
-      </Section>
-    </>
-  );
-}
-
-export default CartList;

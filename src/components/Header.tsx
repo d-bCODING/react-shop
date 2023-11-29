@@ -7,12 +7,13 @@ import { useSelector } from "react-redux";
 
 export default function Header() {
 
-  const cartList = useSelector(state => state)
+  const cartList = useSelector(state => state.cartList)
   console.log(cartList);
   
 
   const cartItem = JSON.parse(localStorage.getItem("cart") || "[]");
-  useEffect(() => {}, [cartItem]);
+  // useEffect(() => {}, [cartItem]);
+
   return (
     <HeaderPart>
       <div className="inner">
@@ -38,7 +39,7 @@ export default function Header() {
           </i>
           <input type="text" placeholder="검색" />
           <Link to="/cart">
-            <span>{cartItem.length}</span>
+            <span>{cartList.length}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 stroke-gray-700 dark:stroke-white"

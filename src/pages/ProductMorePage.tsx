@@ -1,81 +1,91 @@
 import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Link, useParams } from "react-router-dom";
+import { useDispatch } from 'react-redux'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 interface product {
-    title: string
-    image: string
-    description: string
-    price: number
-    rating: {
-        rate: number
-        count: number
-    }
+  id: number
+  title: string
+  image: string
+  description: string
+  price: number
+  rating: {
+    rate: number
+    count: number
+  }
 }
 
 const ProductsMorePage = () => {
-    const { type: prductType, id: productId } = useParams()
-    const [product, setProduct] = useState<product>()
+  const { type: prductType, id: productId } = useParams()
+  const [product, setProduct] = useState<product>()
+  const dispatch = useDispatch();
 
-    const getProductInfo = async () => {
-        let data = [];
-        try {
-            const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
-            data = await response.json();
-            setProduct(data);
-        } catch (error) {
-            console.log(error);
-        }
+  const getProductInfo = async () => {
+    let data = [];
+    try {
+      const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+      data = await response.json();
+      setProduct(data);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    const addCartList = () => {
-    };
 
-    useEffect(() => {
-        getProductInfo();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
-    return (
-        <>
-            <Header />
-            {product && (
-                <Section>
-                    <div className="inner">
-                        <p className="category">
-                            {prductType} &gt; {product.title}
-                        </p>
-                        <div className="product">
-                            <img src={product.image} alt="상품 이미지" className="img-box"/>
-                            <div className="info">
-                                <p className="title">{product.title}</p>
-                                <p className="description">{product.description}</p>
-                                <div className="score">
-                                    <ul>
-                                        {Array.from({ length: Math.round(product.rating.rate) }, () => (
-                                            <ColoredCircle />
-                                        ))}
-                                        {Array.from({ length: 5 - Math.round(product.rating.rate) }, () => (
-                                            <JustCircle />
-                                        ))}
-                                    </ul>
-                                    <span>{product.rating.rate} / {product.rating.count}명 참여</span>
-                                </div>
-                                <p className="price">${product.price}</p>
-                                <div className="link">
-                                    <button onClick={addCartList}>장바구니에 담기</button>
-                                    <Link to="/cart">장바구니로 이동</Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Section>
-            )}
-            <Footer />
-        </>
-    );
+  const addCartList = (src: string, title:string, price:number) => {
+    dispatch({
+      type: 'add',
+      productTitle: title,
+      productPrice: price,
+    })
+  };
+
+  useEffect(() => {
+    getProductInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return (
+    <>
+      <Header />
+      {product && (
+        <Section>
+          <div className="inner">
+            <p className="category">
+              {prductType} &gt; {product.title}
+            </p>
+            <div className="product">
+              <img src={product.image} alt="상품 이미지" className="img-box" />
+              <div className="info">
+                <p className="title">{product.title}</p>
+                <p className="description">{product.description}</p>
+                <div className="score">
+                  <ul>
+                    {Array.from({ length: Math.round(product.rating.rate) }, () => (
+                      <ColoredCircle />
+                    ))}
+                    {Array.from({ length: 5 - Math.round(product.rating.rate) }, () => (
+                      <JustCircle />
+                    ))}
+                  </ul>
+                  <span>{product.rating.rate} / {product.rating.count}명 참여</span>
+                </div>
+                <p className="price">${product.price}</p>
+                <div className="link">
+                  <button onClick={() => addCartList(product.image, product.title, product.price)}>장바구니에 담기</button>
+                  <Link to="/cart">장바구니로 이동</Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Section>
+      )}
+      <Footer />
+    </>
+  );
 }
 
 export default ProductsMorePage;

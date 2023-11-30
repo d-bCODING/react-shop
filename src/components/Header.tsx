@@ -1,18 +1,58 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
+interface cartListObj {
+  cartList: []
+}
 
+interface products {
+  id: number
+  category: string
+  image: string
+  title: string
+  price: number
+}
 
-export default function Header() {
+const Header = () => {
+  const navigate = useNavigate();
+  const cartList = useSelector((state: cartListObj) => state.cartList);
+  const [products, setProducts] = useState<products[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<products[]>([]);
+  const [input, setInput] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
 
-  const cartList = useSelector(state => state.cartList)
-  console.log(cartList);
+  const getAllProducts = async () => {
+    try {
+      const response1 = await fetch(`https://fakestoreapi.com/products`);
+      const data = await response1.json()
+      console.log(data);
+
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const goToProductMore = (productType: string, productId: number) => {
+    if (productType.includes('clothing')) {
+      productType = 'clothing';
+    }
+    navigate(`/${productType}/${productId}`);
+  }
+
+  window.addEventListener('click', () => setSearchOpen(false))
   
+  useEffect(() => {
+    getAllProducts();
+  }, [])
 
-  const cartItem = JSON.parse(localStorage.getItem("cart") || "[]");
-  // useEffect(() => {}, [cartItem]);
+  useEffect(() => {
+    setFilteredProducts(products.filter(obj => obj.title.toLowerCase().includes(input.toLowerCase())));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [input])
 
   return (
     <HeaderPart>
@@ -37,7 +77,18 @@ export default function Header() {
               <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"></path>
             </svg>
           </i>
-          <input type="text" placeholder="검색" />
+          <div className="input-div">
+            <input type="text" placeholder="검색" onChange={e => {setInput(e.target.value), setSearchOpen(true)}} />
+            {filteredProducts.length > 0 && input.length > 0 && searchOpen &&
+              <ol>
+                {filteredProducts.map(el => (
+                  <li key={el.id}>
+                    <button onClick={() => goToProductMore(el.category, el.id)}>{el.title}</button>
+                  </li>
+                ))}
+              </ol>
+            }
+          </div>
           <Link to="/cart">
             <span>{cartList.length}</span>
             <svg
@@ -59,6 +110,8 @@ export default function Header() {
     </HeaderPart>
   );
 }
+
+export default Header;
 
 const HeaderPart = styled.header`
   z-index: 99;
@@ -119,13 +172,53 @@ const HeaderPart = styled.header`
         width: 30px;
         height: 30px;
       }
-      input {
-        background-color: #d1d5db;
-        border-radius: 5px;
-        border: none;
-        width: 215px;
+      .input-div {
+        position: relative;
+        width: 230px;
         height: 100%;
+        box-sizing: content-box;
         padding: 0 16px;
+        input{
+          width: 100%;
+          height: 100%;
+          background-color: #d1d5db;
+          border-radius: 5px;
+          border: none;
+          padding: 0 16px;
+          outline: none;
+          box-sizing: border-box;
+        }
+        ol{
+          position: absolute;
+          left: 16px;
+          top: 43px;
+          width: 230px;
+          max-height: 200px;
+          border-radius: 0 0 5px 5px;
+          background-color: white;
+          overflow: auto;
+          overflow-x: hidden;
+          display: flex;
+          flex-direction: column;
+          &::-webkit-scrollbar{
+            /* display: none; */
+          }
+          li{
+            &:hover{
+              background-color: #ececec;
+            }
+            button{
+              padding: 16px 16px;
+              border: none;
+              background-color: transparent;
+              width: 100%;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+     
       }
       a {
         position: relative;

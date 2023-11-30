@@ -35,9 +35,10 @@ const ProductsMorePage = () => {
 
 
 
-  const addCartList = (src: string, title:string, price:number) => {
+  const addCartList = (id: number, title:string, price:number) => {
     dispatch({
       type: 'add',
+      productId: id,
       productTitle: title,
       productPrice: price,
     })
@@ -46,7 +47,7 @@ const ProductsMorePage = () => {
   useEffect(() => {
     getProductInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [productId])
 
   return (
     <>
@@ -75,7 +76,7 @@ const ProductsMorePage = () => {
                 </div>
                 <p className="price">${product.price}</p>
                 <div className="link">
-                  <button onClick={() => addCartList(product.image, product.title, product.price)}>장바구니에 담기</button>
+                  <button onClick={() => addCartList(product.id, product.title, product.price)}>장바구니에 담기</button>
                   <Link to="/cart">장바구니로 이동</Link>
                 </div>
               </div>

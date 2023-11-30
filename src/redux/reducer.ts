@@ -1,11 +1,15 @@
 import { createStore } from "redux";
-import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
+// import storage from "redux-persist/lib/storage";
+// import { persistReducer, persistStore } from "redux-persist";
+
+interface product {
+  producId: number
+  productPrice: number
+  productTitle: string
+}
 
 // rootReducer
 export const cartListReducer = (currentState, action) => {
-  console.log(action);
-  
   if (currentState === undefined) {
     return {
       cartList: [],
@@ -15,13 +19,14 @@ export const cartListReducer = (currentState, action) => {
 
   if (action.type === "add") {
     newState.cartList = [...newState.cartList, {
-      productPrice: Number(action.productPrice),
+      productId: Number(action.productId),
       productTitle: action.productTitle,
+      productPrice: Number(action.productPrice),
     }];
     return newState;
   }
   if (action.type === "minus") {
-    newState.cartList = newState.cartList.filter(obj => obj.productTitle !== action.productTitle);
+    newState.cartList = newState.cartList.filter((obj:product) => obj.productTitle !== action.productTitle);
     return newState;
   }
   if (action.type === "removeAll") {

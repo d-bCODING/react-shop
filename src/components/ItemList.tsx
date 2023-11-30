@@ -46,7 +46,6 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
       const response = await fetch(`https://fakestoreapi.com/products/category/${productsType}`);
       data = await response.json();
       setProducts(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +63,6 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
       const response = await fetch(`https://fakestoreapi.com/products/category/${productsType}?limit=4`);
       data = await response.json();
       setProducts(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +70,7 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
   
   useEffect(() => {
     setProducts([]);
-    if (productsType) {
+    if (props.sort === 'complex') {
       getAllProducts();
     }else{
       getFourProducts();

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 interface product {
+  productId: number
   productPrice: number
   productTitle: string
 }
@@ -13,8 +14,7 @@ interface cartListObj {
 
 function CartList() {
   const dispatch = useDispatch();
-  const cartList = useSelector((state:cartListObj) => state.cartList)
-  console.log(cartList);
+  const cartList = useSelector((state: cartListObj) => state.cartList)
 
   const totalPrice = cartList.reduce((accumulator: number, obj: product) => accumulator + obj.productPrice, 0);
 
@@ -45,15 +45,13 @@ function CartList() {
             <>
               <ul className="list">
                 {cartList.map((el: product) => (
-                  <>
-                    <li key={el.productTitle}>
-                      <span>{el.productTitle}</span>
-                      <div>
-                        <span>${el.productPrice}</span>
-                        <button onClick={() => removeItem(el.productTitle)}>삭제</button>
-                      </div>
-                    </li>
-                  </>
+                  <li key={el.productId}>
+                    <span>{el.productTitle}</span>
+                    <div>
+                      <span>${el.productPrice}</span>
+                      <button onClick={() => removeItem(el.productTitle)}>삭제</button>
+                    </div>
+                  </li>
                 ))}
               </ul>
               <div className="sum">

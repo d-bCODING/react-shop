@@ -5,17 +5,17 @@ import SortedProductPage from "./pages/SortedProductPage";
 import ProductMorePage from "./pages/ProductMorePage";
 import NotFoundPage from "./pages/NotFoundPage";
 
-function App() {
+const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={"/"} element={<MainPage />}/>
-        <Route path={"/:type"} element={<SortedProductPage />}/>
-        <Route path={"/:type/:id"} element={<ProductMorePage />}/>
-        <Route path={"/cart"} element={<CartPage />}/>
-        <Route path="*" element={<NotFoundPage />}/>
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path={"/"} element={<MainPage />} />
+          <Route path={"/:type"} element={<SortedProductPage />} />
+          <Route path={"/:type/:id"} element={<ProductMorePage />} />
+          <Route path={"/cart"} element={<CartPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
   );
 }
 

@@ -3,6 +3,9 @@ import Footer from "../components/Footer";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useRecoilValue } from "recoil";
+import { isDarkState } from "../recoil/atom";
+import { ThemeObj } from "../theme/theme";
 
 interface product {
   productId: number
@@ -14,12 +17,27 @@ interface cartListObj {
   cartList: []
 }
 
+interface nowTheme {
+  bgColor: string
+  textColor: string
+}
+
 const CartPage = () => {
-  const dispatch = useDispatch();
   const cartList = useSelector((state: cartListObj) => state.cartList)
+  const isDark = useRecoilValue(isDarkState);
 
+  let nowTheme = {
+    bgColor: '',
+    textColor: '',
+  }
+  if (isDark) {
+    nowTheme = ThemeObj.darkTheme
+  } else {
+    nowTheme = ThemeObj.whiteTheme
+  }
+
+  const dispatch = useDispatch();
   const totalPrice = cartList.reduce((accumulator: number, obj: product) => accumulator + obj.productPrice, 0);
-
   const removeItem = (title: string) => {
     dispatch({
       type: 'minus',
@@ -35,7 +53,7 @@ const CartPage = () => {
   return (
     <>
       <Header></Header>
-      <Section>
+      <Section nowtheme={nowTheme}>
         <div className="inner">
           <p className="category">홈 &gt; 장바구니</p>
           {cartList.length === 0 && (
@@ -72,12 +90,13 @@ const CartPage = () => {
 
 export default CartPage
 
-const Section = styled.section`
+const Section = styled.section<{nowtheme: nowTheme}>`
   margin-top: 80px;
   .inner {
     width: 1328px;
     margin: 0 auto;
     .category {
+      color: ${props => props.nowtheme.textColor};
       height: 50px;
       line-height: 50px;
       font-size: 14px;
@@ -85,6 +104,7 @@ const Section = styled.section`
     }
     div {
       h2 {
+        color: ${props => props.nowtheme.textColor};
         margin-top: 40px;
         font-size: 24px;
       }
@@ -124,6 +144,7 @@ const Section = styled.section`
     .sum {
       margin-top: 50px;
       p {
+        color: ${props => props.nowtheme.textColor};
         font-size: 30px;
       }
       button {

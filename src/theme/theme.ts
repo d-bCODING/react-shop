@@ -1,12 +1,11 @@
-const lightTheme = {
-    textColor : 'white'
-}
+const whiteTheme = {
+  textColor: "black",
+  bgColor: "white",
+};
 
 const darkTheme = {
-    textColor : 'black'
-}
+  textColor: "white",
+  bgColor: "#191919",
+};
 
-export const theme = {
-    lightTheme,
-    darkTheme
-}
+export const ThemeObj = { whiteTheme, darkTheme };

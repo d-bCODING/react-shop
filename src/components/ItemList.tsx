@@ -1,17 +1,37 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { isDarkState } from "../recoil/atom";
+import { ThemeObj } from "../theme/theme";
 
 interface products {
-  id:number
-  image:string
-  title:string
-  price:number
+  id: number
+  image: string
+  title: string
+  price: number
+}
+
+interface nowTheme {
+  bgColor: string
+  textColor: string
 }
 
 //아이템 리스트 나열하는 컴포넌트
 const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
-  const [products, setProducts] = useState<products[]>([])
+  const [products, setProducts] = useState<products[]>([]);
+  const isDark = useRecoilValue(isDarkState);
+
+  let nowTheme = {
+    bgColor: '',
+    textColor: '',
+  }
+  if (isDark) {
+    nowTheme = ThemeObj.darkTheme
+  } else {
+    nowTheme = ThemeObj.whiteTheme
+  }
+
   let productsType = useParams().type
   if (productsType === undefined) {
     productsType = props.category
@@ -67,26 +87,26 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
       console.log(error);
     }
   }
-  
+
   useEffect(() => {
     setProducts([]);
     if (props.sort === 'complex') {
       getAllProducts();
-    }else{
+    } else {
       getFourProducts();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsType])
 
   return (
     <>
-      <Section>
+      <Section nowtheme={nowTheme}>
         <div className="inner">
           {props.sort === "complex" && (
             <p className="category">홈 &gt; {title}</p>
           )}
           <h3>{title}</h3>
-          {products.length === 0 && <p className="loading">Loading...</p> }
+          {products.length === 0 && <p className="loading">Loading...</p>}
           {products && (
             <ul>
               {products.map((el) => (
@@ -115,7 +135,7 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
 
 export default ItemList;
 
-const Section = styled.section`
+const Section = styled.section<{ nowtheme: nowTheme }>`
   height: auto;
   min-height: 100%;
   margin-top: 80px;
@@ -123,18 +143,21 @@ const Section = styled.section`
     width: 1328px;
     margin: 0 auto;
     .category {
+      color: ${props => props.nowtheme.textColor};
       height: 50px;
       line-height: 50px;
       font-size: 14px;
       margin: 10px 0px;
     }
     h3 {
+      color: ${props => props.nowtheme.textColor};
       display: flex;
       justify-content: center;
       font-size: 36px;
       font-weight: 700;
     }
     .loading{
+      color: ${props => props.nowtheme.textColor};
       margin-top: 40px;
       text-align: center;
     }
@@ -147,6 +170,10 @@ const Section = styled.section`
         a {
           color: black;
           text-decoration: none;
+          .img-container{
+            border-radius : 10px 10px 0 0;
+            background-color: white;
+          }
         }
         &:hover {
           div:first-child {

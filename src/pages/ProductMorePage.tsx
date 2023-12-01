@@ -4,6 +4,9 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useRecoilValue } from "recoil";
+import { isDarkState } from "../recoil/atom";
+import { ThemeObj } from "../theme/theme";
 
 interface product {
   id: number
@@ -17,9 +20,25 @@ interface product {
   }
 }
 
+interface nowTheme {
+  bgColor: string
+  textColor: string
+}
+
 const ProductsMorePage = () => {
   const { type: prductType, id: productId } = useParams()
   const [product, setProduct] = useState<product>()
+  const isDark = useRecoilValue(isDarkState);
+  let nowTheme = {
+    bgColor: '',
+    textColor: '',
+  }
+  if (isDark) {
+    nowTheme = ThemeObj.darkTheme
+  } else {
+    nowTheme = ThemeObj.whiteTheme
+  }
+
   const dispatch = useDispatch();
 
   const getProductInfo = async () => {
@@ -53,7 +72,7 @@ const ProductsMorePage = () => {
     <>
       <Header />
       {product && (
-        <Section>
+        <Section nowtheme={nowTheme}>
           <div className="inner">
             <p className="category">
               {prductType} &gt; {product.title}
@@ -91,12 +110,13 @@ const ProductsMorePage = () => {
 
 export default ProductsMorePage;
 
-const Section = styled.section`
+const Section = styled.section<{ nowtheme: nowTheme }>`
   margin-top: 80px;
   .inner {
     width: 1328px;
     margin: 0 auto;
     .category {
+      color: ${props => props.nowtheme.textColor};
       height: 50px;
       line-height: 50px;
       font-size: 14px;
@@ -113,6 +133,7 @@ const Section = styled.section`
         background-size: cover;
       }
       .info {
+        color: ${props => props.nowtheme.textColor};
         display: flex;
         flex-direction: column;
         gap: 20px;

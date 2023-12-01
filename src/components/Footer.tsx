@@ -1,8 +1,27 @@
 import { styled } from "styled-components";
+import { useRecoilValue } from "recoil";
+import { isDarkState } from "../recoil/atom";
+import { ThemeObj } from "../theme/theme";
+
+interface nowTheme {
+  bgColor: string
+  textColor: string
+}
 
 export default function Footer() {
+  const isDark = useRecoilValue(isDarkState);
+
+  let nowTheme = {
+    bgColor: '',
+    textColor: '',
+  }
+  if (isDark) {
+    nowTheme = ThemeObj.darkTheme
+  } else {
+    nowTheme = ThemeObj.whiteTheme
+  }
   return (
-    <FooterPart>
+    <FooterPart nowtheme={nowTheme}>
       <ul>
         <li>
           <a href="">zerobase_FE_14_KDB</a>
@@ -228,7 +247,7 @@ export default function Footer() {
           </ul>
         </li>
         <li>
-          <ul>
+          <ul className="sns">
             <li>
               <a href="">
                 <svg
@@ -283,16 +302,18 @@ export default function Footer() {
   );
 }
 
-const FooterPart = styled.footer`
+const FooterPart = styled.footer<{ nowtheme: nowTheme }>`
   position: relative;
   width: 100%;
   height: 288px;
   padding: 40px;
   box-sizing: border-box;
   margin-top: 100px;
-  background-color: #f2f2f2;
+  background-color: ${props => props.nowtheme.bgColor};
   display: flex;
   justify-content: center;
+  color: ${props => props.nowtheme.textColor};
+  font-weight: bold;
   ul {
     display: flex;
     justify-content: center;
@@ -304,7 +325,7 @@ const FooterPart = styled.footer`
     li {
       &:first-child {
         a {
-          color: black;
+          color: ${props => props.nowtheme.textColor};
           text-decoration: none;
           font-size: 14px;
           &:hover {
@@ -318,6 +339,11 @@ const FooterPart = styled.footer`
         justify-content: center;
         flex-direction: row;
       }
+    }
+  }
+  .sns{
+    svg{
+      fill: ${props => props.nowtheme.textColor};
     }
   }
 `;

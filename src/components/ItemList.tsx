@@ -100,7 +100,7 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
 
   return (
     <>
-      <Section nowtheme={nowTheme}>
+      <Section nowtheme={nowTheme} className="content">
         <div className="inner">
           {props.sort === "complex" && (
             <p className="category">홈 &gt; {title}</p>

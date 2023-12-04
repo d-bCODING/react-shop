@@ -20,11 +20,12 @@ export default function Footer() {
   } else {
     nowTheme = ThemeObj.whiteTheme
   }
+
   return (
     <FooterPart nowtheme={nowTheme}>
       <ul>
         <li>
-          <a href="">zerobase_FE_14_KDB</a>
+          <a href="/">zerobase_FE_14_KDB</a>
         </li>
         <li>
           <ul>
@@ -303,12 +304,11 @@ export default function Footer() {
 }
 
 const FooterPart = styled.footer<{ nowtheme: nowTheme }>`
-  position: relative;
   width: 100%;
   height: 288px;
   padding: 40px;
-  box-sizing: border-box;
   margin-top: 100px;
+  box-sizing: border-box;
   background-color: ${props => props.nowtheme.bgColor};
   display: flex;
   justify-content: center;

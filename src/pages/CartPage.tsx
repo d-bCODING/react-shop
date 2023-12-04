@@ -53,7 +53,7 @@ const CartPage = () => {
   return (
     <>
       <Header></Header>
-      <Section nowtheme={nowTheme}>
+      <Section nowtheme={nowTheme} className="content">
         <div className="inner">
           <p className="category">홈 &gt; 장바구니</p>
           {cartList.length === 0 && (

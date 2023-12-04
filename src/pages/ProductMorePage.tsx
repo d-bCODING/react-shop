@@ -52,8 +52,6 @@ const ProductsMorePage = () => {
     }
   }
 
-
-
   const addCartList = (id: number, title:string, price:number) => {
     dispatch({
       type: 'add',
@@ -72,7 +70,7 @@ const ProductsMorePage = () => {
     <>
       <Header />
       {product && (
-        <Section nowtheme={nowTheme}>
+        <Section nowtheme={nowTheme} className="content">
           <div className="inner">
             <p className="category">
               {prductType} &gt; {product.title}

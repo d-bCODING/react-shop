@@ -132,17 +132,17 @@ const Viewed = styled.div<{ count: number; vw: number }>`
       }
     }
     &:nth-child(1) {
-      background: url("jeans.jpeg")
+      background: url("/src/img/jeans.jpeg")
       no-repeat center bottom -500px;
       background-size: cover;
     }
     &:nth-child(2) {
-      background: url("digital.jpeg")
+      background: url("/src/img/digital.jpeg")
       no-repeat center bottom -500px;
       background-size: cover;
     }
     &:nth-child(3) {
-      background: url("grocery.jpeg")
+      background: url("/src/img/grocery.jpeg")
       no-repeat center bottom -500px;
       background-size: cover;
     }

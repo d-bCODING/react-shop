@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { isDarkState } from "../recoil/atom";
 import { ThemeObj } from "../theme/theme";
-import dotLoading from "../img/dotLoading.gif"
+import loading from "../img/loading.png"
 
 interface products {
   id: number
@@ -110,7 +110,7 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
 
           {products.length === 0 &&
             <div className="loading-box">
-              <img src={dotLoading} alt="loading..." className="loading" />
+              <img src={loading} alt="loading..." className="loading" />
             </div>
           }
           {products && (

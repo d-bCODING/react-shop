@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import { useRecoilValue } from "recoil";
 import { isDarkState } from "../recoil/atom";
 import { ThemeObj } from "../theme/theme";
-import dotLoading from "../img/dotLoading.gif"
+import loading from "../img/loading.png"
 
 interface product {
   id: number
@@ -102,7 +102,7 @@ const ProductsMorePage = () => {
           </div>
         ) :
           <div className="loading-box">
-            <img src={dotLoading} alt="loading..." className="loading" />
+            <img src={loading} alt="loading..." className="loading" />
           </div>
         }
       </Section>

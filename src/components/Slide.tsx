@@ -21,9 +21,9 @@ export default function Slide() {
     }
   };
 
-  const autoSlide = () => {
-    setInterval(upCount, 5000);
-  };
+  // const autoSlide = () => {
+  //   setInterval(upCount, 5000);
+  // };
 
   // autoSlide();
 

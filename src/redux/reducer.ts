@@ -2,14 +2,26 @@ import { createStore } from "redux";
 // import storage from "redux-persist/lib/storage";
 // import { persistReducer, persistStore } from "redux-persist";
 
-interface product {
+interface productType {
   productId: number;
   productPrice: number;
   productTitle: string;
 }
 
+interface actionType {
+  productId: number;
+  productPrice: number;
+  productTitle: string;
+  type: string;
+}
+
+// interface curObj {
+//   cartList: productType[];
+// }
+
 // rootReducer
-export const cartListReducer = (currentState, action) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const cartListReducer = (currentState: any, action:actionType) => {
   if (currentState === undefined) {
     return {
       cartList: [],
@@ -20,7 +32,7 @@ export const cartListReducer = (currentState, action) => {
   if (action.type === "add") {
     console.log(newState);
     
-    if (newState.cartList.some((obj:product) => obj.productId === action.productId)) {
+    if (newState.cartList.some((obj:productType) => obj.productId === action.productId)) {
       alert("이미 장바구니에 담긴 상품입니다.");
       return newState;
     }
@@ -37,7 +49,7 @@ export const cartListReducer = (currentState, action) => {
   }
   if (action.type === "minus") {
     newState.cartList = newState.cartList.filter(
-      (obj: product) => obj.productTitle !== action.productTitle
+      (obj: productType) => obj.productTitle !== action.productTitle
     );
     return newState;
   }

@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import { useRecoilValue } from "recoil";
 import { isDarkState } from "../recoil/atom";
 import { ThemeObj } from "../theme/theme";
+import dotLoading from "../img/dotLoading.gif"
 
 interface product {
   id: number
@@ -52,7 +53,7 @@ const ProductsMorePage = () => {
     }
   }
 
-  const addCartList = (id: number, title:string, price:number) => {
+  const addCartList = (id: number, title: string, price: number) => {
     dispatch({
       type: 'add',
       productId: id,
@@ -69,8 +70,8 @@ const ProductsMorePage = () => {
   return (
     <>
       <Header />
-      {product && (
-        <Section nowtheme={nowTheme} className="content">
+      <Section nowtheme={nowTheme} className="content">
+        {product ? (
           <div className="inner">
             <p className="category">
               {prductType} &gt; {product.title}
@@ -99,8 +100,12 @@ const ProductsMorePage = () => {
               </div>
             </div>
           </div>
-        </Section>
-      )}
+        ) :
+          <div className="loading-box">
+            <img src={dotLoading} alt="loading..." className="loading" />
+          </div>
+        }
+      </Section>
       <Footer />
     </>
   );
@@ -120,6 +125,7 @@ const Section = styled.section<{ nowtheme: nowTheme }>`
       font-size: 14px;
       margin: 10px 0px;
     }
+  
     .product {
       display: flex;
       margin-top: 50px;
@@ -185,6 +191,15 @@ const Section = styled.section<{ nowtheme: nowTheme }>`
       }
     }
   }
+  .loading-box{
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      .loading{
+        color: ${props => props.nowtheme.textColor};
+        margin-top: 40px;
+      }
+    }
 `;
 
 const ColoredCircle = styled.li`

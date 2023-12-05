@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { isDarkState } from "../recoil/atom";
 import { ThemeObj } from "../theme/theme";
+import dotLoading from "../img/dotLoading.gif"
 
 interface products {
   id: number
@@ -106,7 +107,12 @@ const ItemList: React.FC<{ sort: string; category: string }> = (props) => {
             <p className="category">홈 &gt; {title}</p>
           )}
           <h3>{title}</h3>
-          {products.length === 0 && <p className="loading">Loading...</p>}
+
+          {products.length === 0 &&
+            <div className="loading-box">
+              <img src={dotLoading} alt="loading..." className="loading" />
+            </div>
+          }
           {products && (
             <ul>
               {products.map((el) => (
@@ -156,10 +162,14 @@ const Section = styled.section<{ nowtheme: nowTheme }>`
       font-size: 36px;
       font-weight: 700;
     }
-    .loading{
-      color: ${props => props.nowtheme.textColor};
-      margin-top: 40px;
-      text-align: center;
+    .loading-box{
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      .loading{
+        color: ${props => props.nowtheme.textColor};
+        margin-top: 40px;
+      }
     }
     ul {
       margin-top: 40px;

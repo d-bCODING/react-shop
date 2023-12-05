@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
+// import digitalImg from "../img/digital.jpeg"
 
 export default function Slide() {
   const [count, setCount] = useState(0);
@@ -132,17 +133,17 @@ const Viewed = styled.div<{ count: number; vw: number }>`
       }
     }
     &:nth-child(1) {
-      background: url("/src/img/jeans.jpeg")
+      background: url("../img/jeans.jpeg")
       no-repeat center bottom -500px;
       background-size: cover;
     }
     &:nth-child(2) {
-      background: url("/src/img/digital.jpeg")
+      background: url("../img/digital.jpeg")
       no-repeat center bottom -500px;
       background-size: cover;
     }
     &:nth-child(3) {
-      background: url("/src/img/grocery.jpeg")
+      background: url("../img/grocery.jpeg")
       no-repeat center bottom -500px;
       background-size: cover;
     }

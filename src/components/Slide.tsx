@@ -10,48 +10,48 @@ export default function Slide() {
   const interval = useRef(0);
   const autoSlideControl = useRef<number>();
 
-  const downCount = () => {
-    if (count === 0) {
-      setCount(2);
-    } else {
-      setCount(count - 1);
+  const clickToPrevPage = () => {
+    if (interval.current === 0) {
+      setCount(2)
+      interval.current = 2;
+      return;
     }
+    interval.current--;
+    setCount(interval.current);
   };
 
-  const upCount = () => {
-    if (count === 2) {
-      setCount(0);
-    } else {
-      setCount(count + 1);
+  const clickToNextPage = () => {
+    if (interval.current === 2) {
+      setCount(0)
+      interval.current = 0;
+      return;
     }
+    interval.current++;
+    setCount(interval.current);
   };
 
   const autoSlide = () => {
     autoSlideControl.current = setInterval(() => {
-      if (interval.current === 2) {
-        setCount(0)
-        interval.current = 0;
-        return;
-      }
-      interval.current++;
-      console.log("ref", interval.current);
-      console.log("state", count);
-      setCount(interval.current);
+      clickToNextPage()
     }, 5000)
   }
 
+  console.log(interval.current);
+
+
   useEffect(() => {
     autoSlide();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const vw = window.innerWidth - 17;
 
   return (
-    <SlideBanner onMouseEnter={() => clearInterval(autoSlideControl.current)} onMouseOut={autoSlide}>
-      <div className="left btn" onClick={downCount}>
+    <SlideBanner onMouseEnter={() => { clearInterval(autoSlideControl.current); }} onMouseLeave={autoSlide}>
+      <div className="left btn" onClick={clickToPrevPage}>
         ◀
       </div>
-      <div className="right btn" onClick={upCount}>
+      <div className="right btn" onClick={clickToNextPage}>
         ▶
       </div>
       <ul className="dot">
@@ -108,9 +108,9 @@ const Viewed = styled.div<{ count: number; vw: number }>`
       margin: 0 auto;
       div {
         background: none;
-        padding: 20px;
+        padding: 20px 60px 20px 20px;
         border-radius: 10px;
-        background-color: #2e2e2e;
+        background-color: rgba(46, 46, 46, 0.9);
         margin-left: 40px;
         p {
           color: white;
@@ -134,7 +134,6 @@ const Viewed = styled.div<{ count: number; vw: number }>`
           line-height: 48px;
           text-decoration: none;
           border-radius: 10px;
-
           text-align: center;
           box-sizing: border-box;
         }

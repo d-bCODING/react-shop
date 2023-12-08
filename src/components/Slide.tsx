@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import digitalImg from "../img/digital.jpeg"
@@ -7,6 +7,7 @@ import groceryImg from "../img/grocery.jpeg"
 
 export default function Slide() {
   const [count, setCount] = useState(0);
+  const interval = useRef(0);
 
   const downCount = () => {
     if (count === 0) {
@@ -24,22 +25,38 @@ export default function Slide() {
     }
   };
 
-  // const autoSlide = () => {
-  //   setInterval(upCount, 5000);
-  // };
 
-  // autoSlide();
+  // const autoSlide = setInterval(() => {
+  //   upCount();
+  // }, 10000)
 
-  //왜 안될까 ㅠㅠ
-  // const stopSlide = () =>{
+  // 왜 안될까 ㅠㅠ
+  // const stopAutoSlide = () => {
+  //   console.log("ㅎㅇ");
   //   clearInterval(autoSlide);
   // }
-
 
   //왜 안될까 ㅠㅠ
   // const move = (number) => {
   //   setCount(number);
   // };
+  console.log("렌더링 되고 있음");
+
+
+  useEffect(() => {
+    console.log("setInterval 선언");
+    const autoSlide = setInterval(() => {
+      if (interval.current === 2) {
+        setCount(0)
+        interval.current = 0;
+        return;
+      }
+      interval.current++;
+      console.log("ref", interval.current);
+      console.log("state", count);
+      setCount(interval.current);
+    }, 5000)
+  }, [])
 
   const vw = window.innerWidth - 17;
 

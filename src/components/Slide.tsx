@@ -42,7 +42,6 @@ export default function Slide() {
   // };
   console.log("렌더링 되고 있음");
 
-
   useEffect(() => {
     console.log("setInterval 선언");
     const autoSlide = setInterval(() => {
@@ -56,6 +55,11 @@ export default function Slide() {
       console.log("state", count);
       setCount(interval.current);
     }, 5000)
+
+    const stopAutoSlide = () => {
+      console.log("ㅎㅇ");
+      clearInterval(autoSlide);
+    }
   }, [])
 
   const vw = window.innerWidth - 17;
@@ -122,6 +126,9 @@ const Viewed = styled.div<{ count: number; vw: number }>`
       margin: 0 auto;
       div {
         background: none;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #2e2e2e;
         margin-left: 40px;
         p {
           color: white;
@@ -152,12 +159,12 @@ const Viewed = styled.div<{ count: number; vw: number }>`
       }
     }
     &:nth-child(1) {
-      background: url(${digitalImg})
+      background: url(${jeansImg})
       no-repeat center bottom -500px;
       background-size: cover;
     }
     &:nth-child(2) {
-      background: url(${jeansImg})
+      background: url(${digitalImg})
       no-repeat center bottom -500px;
       background-size: cover;
     }

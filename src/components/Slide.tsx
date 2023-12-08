@@ -8,6 +8,7 @@ import groceryImg from "../img/grocery.jpeg"
 export default function Slide() {
   const [count, setCount] = useState(0);
   const interval = useRef(0);
+  const autoSlideControl = useRef<number>();
 
   const downCount = () => {
     if (count === 0) {
@@ -25,26 +26,8 @@ export default function Slide() {
     }
   };
 
-
-  // const autoSlide = setInterval(() => {
-  //   upCount();
-  // }, 10000)
-
-  // 왜 안될까 ㅠㅠ
-  // const stopAutoSlide = () => {
-  //   console.log("ㅎㅇ");
-  //   clearInterval(autoSlide);
-  // }
-
-  //왜 안될까 ㅠㅠ
-  // const move = (number) => {
-  //   setCount(number);
-  // };
-  console.log("렌더링 되고 있음");
-
-  useEffect(() => {
-    console.log("setInterval 선언");
-    const autoSlide = setInterval(() => {
+  const autoSlide = () => {
+    autoSlideControl.current = setInterval(() => {
       if (interval.current === 2) {
         setCount(0)
         interval.current = 0;
@@ -55,17 +38,16 @@ export default function Slide() {
       console.log("state", count);
       setCount(interval.current);
     }, 5000)
+  }
 
-    const stopAutoSlide = () => {
-      console.log("ㅎㅇ");
-      clearInterval(autoSlide);
-    }
+  useEffect(() => {
+    autoSlide();
   }, [])
 
   const vw = window.innerWidth - 17;
 
   return (
-    <SlideBanner>
+    <SlideBanner onMouseEnter={() => clearInterval(autoSlideControl.current)} onMouseOut={autoSlide}>
       <div className="left btn" onClick={downCount}>
         ◀
       </div>
@@ -175,7 +157,7 @@ const Viewed = styled.div<{ count: number; vw: number }>`
     }
   }
 
-  transition: all 0.5s;
+  transition: all 500ms;
   transform: ${(props) => "translateX(-" + Math.round(props.count * props.vw) + "px)"};
 `;
 

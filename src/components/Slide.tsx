@@ -6,14 +6,21 @@ import jeansImg from "../img/jeans.jpeg"
 import groceryImg from "../img/grocery.jpeg"
 
 export default function Slide() {
-  const [count, setCount] = useState(0);
-  const interval = useRef(0);
+  const [count, setCount] = useState(1);
+  const [transitionTime, setTransitionTime] = useState(500);
+  const interval = useRef(1);
   const autoSlideControl = useRef<number>();
 
   const clickToPrevPage = () => {
     if (interval.current === 0) {
-      setCount(2)
-      interval.current = 2;
+      setTransitionTime(0);
+      interval.current = 3;
+      setCount(interval.current)
+      setTimeout(() => {
+        setTransitionTime(500);
+        interval.current = 2;
+        setCount(interval.current)
+      });
       return;
     }
     interval.current--;
@@ -21,9 +28,15 @@ export default function Slide() {
   };
 
   const clickToNextPage = () => {
-    if (interval.current === 2) {
-      setCount(0)
-      interval.current = 0;
+    if (interval.current === 4) {
+      setTransitionTime(0);
+      interval.current = 1;
+      setCount(interval.current)
+      setTimeout(() => {
+        setTransitionTime(500);
+        interval.current = 2;
+        setCount(interval.current)
+      });
       return;
     }
     interval.current++;
@@ -59,26 +72,8 @@ export default function Slide() {
         <li></li>
         <li></li>
       </ul>
-      <Viewed count={count} vw={vw}>
-        <div className="slide">
-          <div className="inner">
-            <div>
-              <p>물빠진 청바지!</p>
-              <p>이제 막 도착한 패션 청바지를 구경해 보세요.</p>
-              <Link to="/clothing">바로가기</Link>
-            </div>
-          </div>
-        </div>
-        <div className="slide">
-          <div className="inner">
-            <div>
-              <p>신속한 업무처리</p>
-              <p>다양한 디지털 상품을 둘러보세요.</p>
-              <Link to="/electronics">바로가기</Link>
-            </div>
-          </div>
-        </div>
-        <div className="slide">
+      <Viewed count={count} vw={vw} transitionTime={transitionTime}>
+        <li className="slide">
           <div className="inner">
             <div>
               <p>신선한 식품!</p>
@@ -86,16 +81,52 @@ export default function Slide() {
               <Link to="/undefined">바로가기</Link>
             </div>
           </div>
-        </div>
+        </li>
+        <li className="slide">
+          <div className="inner">
+            <div>
+              <p>물빠진 청바지!</p>
+              <p>이제 막 도착한 패션 청바지를 구경해 보세요.</p>
+              <Link to="/clothing">바로가기</Link>
+            </div>
+          </div>
+        </li>
+        <li className="slide">
+          <div className="inner">
+            <div>
+              <p>신속한 업무처리</p>
+              <p>다양한 디지털 상품을 둘러보세요.</p>
+              <Link to="/electronics">바로가기</Link>
+            </div>
+          </div>
+        </li>
+        <li className="slide">
+          <div className="inner">
+            <div>
+              <p>신선한 식품!</p>
+              <p>농장 직배송으로 더욱 신선한 식료품을 만나보세요.</p>
+              <Link to="/undefined">바로가기</Link>
+            </div>
+          </div>
+        </li>
+        <li className="slide">
+          <div className="inner">
+            <div>
+              <p>물빠진 청바지!</p>
+              <p>이제 막 도착한 패션 청바지를 구경해 보세요.</p>
+              <Link to="/clothing">바로가기</Link>
+            </div>
+          </div>
+        </li>
       </Viewed>
     </SlideBanner>
   );
 }
 
-const Viewed = styled.div<{ count: number; vw: number }>`
+const Viewed = styled.ul<{ count: number; vw: number; transitionTime: number }>`
   display: flex;
   height: 100%;
-  width: calc((100vw - (100vw - 100%)) * 3);
+  width: calc((100vw - (100vw - 100%)) * 5);
   .slide {
     width: calc(100vw - (100vw - 100%));
     height: 100%;
@@ -139,31 +170,30 @@ const Viewed = styled.div<{ count: number; vw: number }>`
         }
       }
     }
-    &:nth-child(1) {
+    &:nth-child(2),
+    &:nth-child(5) {
       background: url(${jeansImg})
       no-repeat center bottom -500px;
       background-size: cover;
     }
-    &:nth-child(2) {
+    &:nth-child(3) {
       background: url(${digitalImg})
       no-repeat center bottom -500px;
       background-size: cover;
     }
-    &:nth-child(3) {
+    &:nth-child(1),
+    &:nth-child(4) {
       background: url(${groceryImg})
       no-repeat center bottom -500px;
       background-size: cover;
     }
   }
 
-  transition: all 500ms;
+  transition: all ${(props) => props.transitionTime + "ms"};
   transform: ${(props) => "translateX(-" + Math.round(props.count * props.vw) + "px)"};
 `;
 
 const SlideBanner = styled.div`
-  :root {
-    --scrollbar-with: ;
-  }
   position: relative;
   margin-top: 64px;
   height: 700px;
@@ -178,6 +208,10 @@ const SlideBanner = styled.div`
     height: 100%;
     cursor: pointer;
     color: white;
+    transition: 200ms;
+    &:hover {
+      background-color: rgba(61, 61, 61, 0.6);
+    }
   }
   .left {
     position: absolute;
@@ -189,8 +223,7 @@ const SlideBanner = styled.div`
     top: 0;
     right: 0;
   }
-
-  ul {
+  .dot {
     z-index: 1;
     display: flex;
     gap: 10px;

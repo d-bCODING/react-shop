@@ -13,7 +13,7 @@ export default function Slide() {
 
   const clickToPrevPage = () => {
     if (interval.current === 0) {
-      setTransitionTime(200);
+      setTransitionTime(0);
       interval.current = 3;
       setCount(interval.current)
       setTimeout(() => {

@@ -6,21 +6,21 @@ import jeansImg from "../img/jeans.jpeg"
 import groceryImg from "../img/grocery.jpeg"
 
 export default function Slide() {
+  const [transitionTime, setTransitionTime] = useState(1000);
   const [count, setCount] = useState(1);
-  const [transitionTime, setTransitionTime] = useState(500);
   const interval = useRef(1);
   const autoSlideControl = useRef<number>();
 
   const clickToPrevPage = () => {
     if (interval.current === 0) {
-      setTransitionTime(0);
+      setTransitionTime(200);
       interval.current = 3;
       setCount(interval.current)
       setTimeout(() => {
-        setTransitionTime(500);
+        setTransitionTime(1000);
         interval.current = 2;
         setCount(interval.current)
-      });
+      }, 10);
       return;
     }
     interval.current--;
@@ -33,10 +33,10 @@ export default function Slide() {
       interval.current = 1;
       setCount(interval.current)
       setTimeout(() => {
-        setTransitionTime(500);
+        setTransitionTime(1000);
         interval.current = 2;
         setCount(interval.current)
-      });
+      }, 10);
       return;
     }
     interval.current++;
@@ -46,7 +46,7 @@ export default function Slide() {
   const autoSlide = () => {
     autoSlideControl.current = setInterval(() => {
       clickToNextPage()
-    }, 5000)
+    }, 4000)
   }
 
   console.log(interval.current);
@@ -60,7 +60,7 @@ export default function Slide() {
   const vw = window.innerWidth - 17;
 
   return (
-    <SlideBanner onMouseEnter={() => { clearInterval(autoSlideControl.current); }} onMouseLeave={autoSlide}>
+    <SlideBanner count={count} onMouseEnter={() => { clearInterval(autoSlideControl.current); }} onMouseLeave={autoSlide}>
       <div className="left btn" onClick={clickToPrevPage}>
         ◀
       </div>
@@ -68,11 +68,11 @@ export default function Slide() {
         ▶
       </div>
       <ul className="dot">
-        <li></li>
-        <li></li>
-        <li></li>
+        {Array.from({ length: 3 }, (_, i) => (
+          <li key={i} onClick={() => { interval.current = i + 1, setCount(interval.current) }}></li>
+        ))}
       </ul>
-      <Viewed count={count} vw={vw} transitionTime={transitionTime}>
+      <Viewed count={count} vw={vw} transitiontime={transitionTime}>
         <li className="slide">
           <div className="inner">
             <div>
@@ -123,7 +123,7 @@ export default function Slide() {
   );
 }
 
-const Viewed = styled.ul<{ count: number; vw: number; transitionTime: number }>`
+const Viewed = styled.ul<{ count: number; vw: number; transitiontime: number }>`
   display: flex;
   height: 100%;
   width: calc((100vw - (100vw - 100%)) * 5);
@@ -189,11 +189,11 @@ const Viewed = styled.ul<{ count: number; vw: number; transitionTime: number }>`
     }
   }
 
-  transition: all ${(props) => props.transitionTime + "ms"};
+  transition: all ${(props) => props.transitiontime + "ms"};
   transform: ${(props) => "translateX(-" + Math.round(props.count * props.vw) + "px)"};
 `;
 
-const SlideBanner = styled.div`
+const SlideBanner = styled.div<{ count: number }>`
   position: relative;
   margin-top: 64px;
   height: 700px;
@@ -239,7 +239,7 @@ const SlideBanner = styled.div`
       opacity: 0.5;
       transition: all 0.5s;
       cursor: pointer;
-      &.selected {
+      &:nth-child(${props => ((props.count + 2) % 3) + 1}){
         opacity: 1;
       }
     }

@@ -30,8 +30,6 @@ export const cartListReducer = (currentState: any, action:actionType) => {
   const newState = { ...currentState };
 
   if (action.type === "add") {
-    console.log(newState);
-    
     if (newState.cartList.some((obj:productType) => obj.productId === action.productId)) {
       alert("이미 장바구니에 담긴 상품입니다.");
       return newState;

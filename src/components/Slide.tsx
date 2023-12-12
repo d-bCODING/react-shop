@@ -49,9 +49,6 @@ export default function Slide() {
     }, 4000)
   }
 
-  console.log(interval.current);
-
-
   useEffect(() => {
     autoSlide();
     // eslint-disable-next-line react-hooks/exhaustive-deps

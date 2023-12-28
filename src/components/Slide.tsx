@@ -9,7 +9,7 @@ export default function Slide() {
   const [transitionTime, setTransitionTime] = useState(1000);
   const [count, setCount] = useState(1);
   const interval = useRef(1);
-  const autoSlideControl = useRef<number>();
+  const autoSlideControll = useRef<number>();
 
   const clickToPrevPage = () => {
     if (interval.current === 0) {
@@ -44,7 +44,7 @@ export default function Slide() {
   };
 
   const autoSlide = () => {
-    autoSlideControl.current = setInterval(() => {
+    autoSlideControll.current = setInterval(() => {
       clickToNextPage()
     }, 4000)
   }
@@ -57,7 +57,7 @@ export default function Slide() {
   const vw = window.innerWidth - 17;
 
   return (
-    <SlideBanner count={count} onMouseEnter={() => { clearInterval(autoSlideControl.current); }} onMouseLeave={autoSlide}>
+    <SlideBanner count={count} onMouseEnter={() => { clearInterval(autoSlideControll.current); }} onMouseLeave={autoSlide}>
       <div className="left btn" onClick={clickToPrevPage}>
         ◀
       </div>
